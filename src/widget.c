@@ -28,7 +28,7 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#define LED_GPIO_NODE_ID DT_COMPAT_GET_ANY_STATUS_OKAY(gpio_leds)
+#define LED_NODE_ID DT_COMPAT_GET_ANY_STATUS_OKAY(pwm_leds)
 
 BUILD_ASSERT(DT_NODE_EXISTS(DT_ALIAS(led_red)),
              "An alias for a red LED is not found for RGBLED_WIDGET");
@@ -41,8 +41,8 @@ BUILD_ASSERT(!(SHOW_LAYER_CHANGE && SHOW_LAYER_COLORS),
              "CONFIG_RGBLED_WIDGET_SHOW_LAYER_CHANGE and CONFIG_RGBLED_WIDGET_SHOW_LAYER_COLORS "
              "are mutually exclusive");
 
-// GPIO-based LED device and indices of red/green/blue LEDs inside its DT node
-static const struct device *led_dev = DEVICE_DT_GET(LED_GPIO_NODE_ID);
+// PWM-based LED device and indices of red/green/blue LEDs inside its DT node
+static const struct device *led_dev = DEVICE_DT_GET(LED_NODE_ID);
 static const uint8_t rgb_idx[] = {DT_NODE_CHILD_IDX(DT_ALIAS(led_red)),
                                   DT_NODE_CHILD_IDX(DT_ALIAS(led_green)),
                                   DT_NODE_CHILD_IDX(DT_ALIAS(led_blue))};
