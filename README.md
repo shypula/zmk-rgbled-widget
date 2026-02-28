@@ -1,5 +1,11 @@
 # LED indicators using an RGB LED
 
+> [!IMPORTANT]
+> This module uses a versioning scheme that is compatible with ZMK versions.
+> As a general rule, the `main` branch is targeting compatibility with ZMK's `main`.
+>
+> **If you have build failures with ZMK's latest release (like `v0.3`) make sure to [use the corresponding revision](#installation) for `zmk-rgbled-widget` in your `west.yml`**.
+
 This is a [ZMK module](https://zmk.dev/docs/features/modules) containing a simple widget that utilizes a (typically built-in) RGB LED controlled by three separate GPIOs.
 It is used to indicate battery level and BLE connection status in a minimalist way.
 
@@ -39,23 +45,21 @@ These layer indicators will only be active on the central part of a split keyboa
 
 ## Installation
 
-To use, first add this module to your `config/west.yml` by adding a new entry to `remotes` and `projects`:
+To use, first add this module to your `config/west.yml` by adding a new entry to `projects`:
 
 ```yaml west.yml
 manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: caksoylar  # <-- new entry
-      url-base: https://github.com/caksoylar
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: v0.3           # Your ZMK version
       import: app/west.yml
     - name: zmk-rgbled-widget  # <-- new entry
-      remote: caksoylar
-      revision: main
+      url: https://github.com/caksoylar/zmk-rgbled-widget
+      revision: v0.3           # MUST match your ZMK version!
   self:
     path: config
 ```
@@ -68,7 +72,7 @@ just add the `rgbled_adapter` as an additional shield to your build, e.g. in `bu
 ```yaml build.yaml
 ---
 include:
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: hummingbird rgbled_adapter
 ```
 
